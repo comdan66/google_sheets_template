@@ -3,12 +3,7 @@
  * @copyright   Copyright (c) 2016 OA Wu Design
  */
 
-// google_sheets_template 
 
-// function GST (key, ) {
-
-// }
-// function 
 var GST = function (options, callback, errorCallback) {
   var url = 'https://spreadsheets.google.com/feeds/cells';
   options = $.extend ({ key: '', index: 0, beforeSend: null }, options);
@@ -33,11 +28,10 @@ var GST = function (options, callback, errorCallback) {
       table[gst_idOf(t.col - 1) + t.row] = t.$t;
     });
 
-    console.error (table);
-
     var obj = {
       table: table,
       cell: function (key, returnDefaultValue) {
+        key = key.toUpperCase ();
         return typeof this.table[key] == 'undefined' ? returnDefaultValue : this.table[key];
       }
     };
@@ -56,7 +50,10 @@ $(function () {
       console.error ('讀取 Google 試算表中..');
     }
   }, function (gst) {
-    var A1 = gst.cell ('A1', 'xxx');
+    console.error ('讀取 Google 試算表完成！');
+    document.body.innerHTML = document.body.innerHTML.replace(/{{([A-Za-z0-9]*)}}/g, function (match, p1) {
+      return gst.cell (p1, '');
+    });
   });
-  
+
 });

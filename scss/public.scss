@@ -6,18 +6,26 @@
 @import "_oa";
 
 @include font-face("Monaco", font-files("monaco/monaco.ttf", "monaco/monaco.otf"));
-// @include font-face("icomoon", font-files("icomoon/icomoon.eot", "icomoon/icomoon.woff", "icomoon/icomoon.ttf", "icomoon/icomoon.svg"));
-// [class^="icon-"], [class*=" icon-"] {
-//   font-family: 'icomoon', Monaco, "微軟正黑體", "Microsoft JhengHei";
-//   speak: none;
-//   font-style: normal;
-//   font-weight: normal;
-//   font-variant: normal;
-//   text-transform: none;
-//   line-height: 1;
+@include font-face("icomoon", font-files("icomoon/icomoon.eot", "icomoon/icomoon.woff", "icomoon/icomoon.ttf", "icomoon/icomoon.svg"));
+[class^="icon-"], [class*=" icon-"] {
+  font-family: 'icomoon', Monaco, "微軟正黑體", "Microsoft JhengHei";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
 
-//   @include font-smoothing(antialiased);
-// }
+  @include font-smoothing(antialiased);
+}
+
+.icon-menu:before {
+  content: "\e120";
+}
+.icon-thin-right:before {
+  content: "\e903";
+}
+
 
 * {
   &, &:after, &:before {
@@ -41,21 +49,160 @@ html {
     font-size: medium;
     font-family: Monaco, "微軟正黑體", "Microsoft JhengHei";
     background: $mainBackgroundColor $mainBackgroundImage;
-    color: rgba(50, 50, 50, 0.8);
+    color: rgba(141, 141, 141, 1.00);
 
     @include font-smoothing(antialiased);
     
-    #container {
-      position: relative;
-      display: block;
-      margin: 0 auto;
-      max-width: $mainWidth;
+    // #container {
+    //   position: relative;
+    //   display: block;
+    //   margin: 0 auto;
+    //   max-width: $mainWidth;
 
-      padding: 0 10px;
+    //   padding: 0 10px;
 
-      @media screen and (min-width: #{$mainWidth}) {
-        padding: 0;
+    //   @media screen and (min-width: #{$mainWidth}) {
+    //     padding: 0;
+    //   }
+    // }
+  }
+}
+
+$mainColor: rgba(15, 157, 88, 1.00);
+$headerHeight: 50px;
+
+.container {
+  margin: 0 auto;
+  max-width: $mainWidth;
+  width: 100%;
+  height: 100%;
+  @media screen and (min-width: 0px) and (max-width: #{$mainWidth - 1px}) {
+    width: calc(100% - 10px * 2);
+  }
+}
+
+#header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  width: 100%;
+  height: $headerHeight;
+  line-height: $headerHeight;
+  background-color: $mainColor;
+  color: rgba(255, 255, 255, 1.00);
+  border-bottom: 5px solid rgba(0, 0, 0, .20);
+
+  + * {
+    margin-top: $headerHeight + 10px;
+  }
+
+  .container {
+    @include clearfix();
+
+    > * {
+      float: left;
+      display: inline-block;
+      height: 100%;
+      font-size: 20px;
+    }
+    .left {
+      width: 230px;
+      text-align: left;
+      font-weight: bold;
+    }
+    .right {
+      text-align: left;
+      width: calc(100% - 230px);
+    }
+  }
+}
+
+#nav {
+
+  .container {
+    @include clearfix();
+
+    a {
+      @include a;
+      float: left;
+      height: 35px;
+      line-height: 35px;
+
+      text-decoration: none;
+
+      + a {
+        &:before {
+          content: "\e903";
+          font-family: 'icomoon', Monaco, "微軟正黑體", "Microsoft JhengHei";
+          font-size: 14px;
+        }
       }
     }
   }
+  
+}
+
+#container .container {
+  @include clearfix();
+  
+  > * {
+    display: inline-block;
+  }
+}
+
+#menu .group, #panel {
+  background-color: rgba(255, 255, 255, 1.00);
+  border: 1px solid rgba(211, 212, 210, 1.00);
+  @include border-radius(2px);
+}
+#menu {
+  float: left;
+  width: 230px;
+
+  .group {
+    + .group {
+      margin-top: 10px;
+    }
+    a {
+      position: relative;
+      text-align: left;
+      display: inline-block;
+      width: 100%;
+      height: 35px;
+      line-height: 35px;
+      padding-left: 35px;
+      text-decoration: none;
+      color: rgba(141, 141, 141, 1.00);
+      // color: rgba(27, 99, 61, 1.00);
+      border-left: 3px solid transparent;
+      @include overflow-docx3();
+      @include transition(all .3s);
+      + a {
+        margin-top: 5px;
+      }
+      
+      &:hover, &.active {
+        font-weight: bold;
+        color: rgba(15, 157, 88, 1.00);
+      }
+      &.active {
+        border-left-color: rgba(15, 157, 88, 1.00);
+      }
+
+      &:before {
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: inline-block;
+        width: 35px;
+        text-align: center;
+
+      }
+    }
+  }
+}
+#panel {
+  width: calc(100% - 230px - 10px);
+  float: right;
 }
