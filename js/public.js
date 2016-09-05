@@ -47,7 +47,7 @@ $(function () {
     key: '1SDK0D9UqZUpGt80BDaeC31_aTTACGthcH-KOImK42BA',
     index: 0,
     beforeSend: function () {
-      console.error ('讀取 Google 試算表中..');
+      console.error ('讀取 Google 試算表中..');
     }
   }, function (gst) {
     console.error ('讀取 Google 試算表完成！');
